@@ -173,7 +173,6 @@ if __name__ == "__main__":
 import socket
 import threading
 
-HOST = "127.0.0.1"
 PORT = 8000
 
 
@@ -191,8 +190,13 @@ def receive_messages(sock):
 
 
 def main():
+    host = input("Enter server IP (press Enter for this computer): ").strip() or "127.0.0.1"
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect((HOST, PORT))
+    try:
+        client.connect((host, PORT))
+    except OSError as e:
+        print(f"Could not connect to {host}:{PORT} - {e}")
+        return
 
     prompt = client.recv(1024).decode()
     client.send(input(prompt).encode())
