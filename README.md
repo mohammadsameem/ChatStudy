@@ -99,14 +99,27 @@ The program uses TCP sockets and threads. The server runs on `127.0.0.1` (localh
 
 ```python
 # chat_server.py - Multi-client chat server using TCP sockets and threads
+# Listens on all network interfaces, so other devices on the same Wi-Fi can connect.
 import socket
 import threading
 
-HOST = "127.0.0.1"
+HOST = "0.0.0.0"             # accept connections from any device on the network
 PORT = 8000
 
 clients = {}                 # socket -> username
 lock = threading.Lock()      # protects the clients dictionary
+
+
+def get_local_ip():
+    """Find this computer's IP address on the Wi-Fi/LAN."""
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(("8.8.8.8", 80))   # no data is sent; only used to pick the right interface
+        return s.getsockname()[0]
+    except OSError:
+        return socket.gethostbyname(socket.gethostname())
+    finally:
+        s.close()
 
 
 def broadcast(message, sender=None):
@@ -155,7 +168,8 @@ def main():
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((HOST, PORT))
     server.listen()
-    print(f"[STARTED] Chat server listening on {HOST}:{PORT}")
+    print(f"[STARTED] Chat server listening on port {PORT}")
+    print(f"[INFO] Clients on the same Wi-Fi should connect to: {get_local_ip()}")
 
     while True:
         conn, addr = server.accept()
