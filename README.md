@@ -240,13 +240,14 @@ if __name__ == "__main__":
 
 ### Server terminal
 
+<img width="952" height="336" alt="image" src="https://github.com/user-attachments/assets/11a80526-94ec-459f-93ee-9294157146d6" />
 
 
 ### Client 1 (Sameem)
+<img width="947" height="577" alt="image" src="https://github.com/user-attachments/assets/6811c944-bbfd-4813-8216-a070080a743d" />
 
-
-
-### Client 2 (Naveen Kumar v)
+### Client 2 (khan)
+<img width="950" height="548" alt="image" src="https://github.com/user-attachments/assets/8687b16a-2630-4416-93e8-582c51b72b07" />
 
 
 ## Result
